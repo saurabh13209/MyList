@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/Hide_List"
+        android:title="Hide List"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/Lock_me"
+        android:title="Protect List"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/share_it"
+        android:icon="@android:drawable/ic_menu_share"
+        android:title="share"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/duplicate"
+        android:title="Duplicate List"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/delete_main_list"
+        android:title="Delete List"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/share_list_item"
+        android:title="Share List"
+        app:showAsAction="never" />
+
+</menu>

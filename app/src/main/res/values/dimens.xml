@@ -1,0 +1,6 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="Main_Heading">25sp</dimen>
+    <dimen name="Main_Heading_Count">20sp</dimen>
+    <dimen name="Main_Heading_Sub">15sp</dimen>
+</resources>

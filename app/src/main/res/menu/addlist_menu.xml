@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="list_complete"
+        app:showAsAction="always"
+        android:icon="@drawable/tick"
+        android:id="@+id/list_completed"></item>
+</menu>

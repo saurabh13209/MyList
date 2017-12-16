@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/search_btn"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="search"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/merge"
+        android:title="Merge List"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/Delete_List"
+        android:title="Delete List"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/Setting"
+        android:title="Setting" />
+
+    <item
+        android:id="@+id/about"
+        android:title="About"
+        app:showAsAction="never" />
+
+
+</menu>

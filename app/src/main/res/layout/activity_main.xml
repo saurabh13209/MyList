@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Main_List_Main_View"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/MainList_Back"
+    android:descendantFocusability="blocksDescendants"
+    tools:context="com.twelo.mylist.MainActivity">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar" />
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/app_bar"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="25dp"
+        android:divider="#FA1"
+        android:dividerHeight="2dp"></ListView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/main_list_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="35dp"
+        android:layout_marginRight="35dp"
+        android:src="@drawable/add" />
+
+
+</RelativeLayout>
