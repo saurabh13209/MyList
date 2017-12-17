@@ -80,6 +80,8 @@ public class Setting extends AppCompatActivity {
             if (s.equals("")) {
                 if (position == 0) {
                     editor.putString(String.valueOf(position), "false");
+                }if (position == 1){
+                    editor.putString(String.valueOf(position),"-By MyList Apk");
                 }
                 editor.commit();
             } else {
@@ -202,7 +204,11 @@ public class Setting extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(Setting.this, password_edit.getText().toString(), Toast.LENGTH_SHORT).show();
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("1",password_edit.getText().toString());
+                    editor.commit();
+                    dialog.dismiss();
+                    Toast.makeText(Setting.this, "Signature updated", Toast.LENGTH_SHORT).show();
                 }
             });
 

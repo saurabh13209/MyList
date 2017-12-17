@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(this, "kickme", Toast.LENGTH_SHORT).show();
         setContentView(R.layout.activity_main);
         MainView = (RelativeLayout) findViewById(R.id.Main_List_Main_View);
         sharedPreferences = MainActivity.this.getSharedPreferences("Database", MODE_PRIVATE);
@@ -174,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        Share_it share = new Share_it(Title.get(position).toString(), all_item.get(position));
+                        Share_it share = new Share_it(Title.get(position).toString(), all_item.get(position) , MainActivity.this);
                         Intent intent = share.getIntent();
                         startActivity(Intent.createChooser(intent, "Send " + Title.get(position).toString() + " List"));
                         builder_1.dismiss();

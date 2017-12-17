@@ -393,7 +393,7 @@ public class ShowmainListActivity extends AppCompatActivity {
             for (String itm : lst) {
                 list.add(itm);
             }
-            Share_it share_it = new Share_it(Title, list);
+            Share_it share_it = new Share_it(Title, list,ShowmainListActivity.this);
             Intent intent = share_it.getIntent();
             startActivity(Intent.createChooser(intent, "Send " + Title + " List"));
         }
@@ -411,9 +411,11 @@ public class ShowmainListActivity extends AppCompatActivity {
             for (String itm : lst) {
                 temp.add(itm);
             }
+
             List_maker list_maker = new List_maker();
             list_maker.setList_title(Title);
             list_maker.setList(temp);
+            list_maker.setDate(Date_Time);
 
             db.add_list(list_maker);
 
@@ -462,10 +464,10 @@ public class ShowmainListActivity extends AppCompatActivity {
                 list.add(itm);
             }
 
-            Share_it share_it = new Share_it(Title, list);
+            Share_it share_it = new Share_it(Title, list,ShowmainListActivity.this);
             Intent intent = share_it.getIntent();
             startActivity(Intent.createChooser(intent, "Send " + Title + " List"));
-
+            startActivity(intent);
         }
 
 
