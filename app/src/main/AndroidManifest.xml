@@ -3,8 +3,11 @@
     package="com.twelo.mylist">
 
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+<<<<<<< HEAD
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
+=======
+>>>>>>> 21e58b701d3b93fb2a6f14a5d599b8fb97451880
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
