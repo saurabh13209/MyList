@@ -34,29 +34,23 @@ public class MainActivity extends AppCompatActivity {
     private RelativeLayout MainView;
     private SharedPreferences sharedPreferences;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        MainView = (RelativeLayout)findViewById(R.id.Main_List_Main_View);
-        sharedPreferences = MainActivity.this.getSharedPreferences("Database",MODE_PRIVATE);
-
-
+        MainView = (RelativeLayout) findViewById(R.id.Main_List_Main_View);
+        sharedPreferences = MainActivity.this.getSharedPreferences("Database", MODE_PRIVATE);
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
         list = (ListView) findViewById(R.id.list);
-
         data = new DataBaseHandler(this);
 
         CustomAdapter custom = new CustomAdapter();
         list.setAdapter(custom);
 
         fab = (FloatingActionButton) findViewById(R.id.main_list_fab);
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,10 +164,9 @@ public class MainActivity extends AppCompatActivity {
     private void database() {
 
         Cursor cur = data.DatabaseToTitle();
-
+        Title = new ArrayList<>();
         while (cur.moveToNext()) {
             Title.add(cur.getString(0));
-
         }
 
         cur = data.getHiddenList();
@@ -181,14 +174,13 @@ public class MainActivity extends AppCompatActivity {
         while (cur.moveToNext()) {
             array_hidden.add(cur.getString(0).toString());
         }
-        if (sharedPreferences.getString("0","").equals("false")){
-            for(int i=0 ; i<array_hidden.size() ; i++){
-                if(Title.contains(array_hidden.get(i))){
+        if (sharedPreferences.getString("0", "").equals("false") || sharedPreferences.getString("0","").equals("")) {
+            for (int i = 0; i < array_hidden.size(); i++) {
+                if (Title.contains(array_hidden.get(i))) {
                     Title.remove(array_hidden.get(i));
                 }
             }
         }
-
 
 
         for (int i = 0; i < Title.size(); i++) {
@@ -200,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
             all_item.add(item);
         }
 
-        if(all_item.size()==0){
+        if (all_item.size() == 0) {
             MainView.setBackgroundResource(R.drawable.min);
         }
 
@@ -236,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
                 first.setText(all_item.get(position).get(0).toString());
 
                 TextView text = (TextView) convertView.findViewById(R.id.first_one);
-                text.setText(Title.get(position).toString().substring(0,1).toUpperCase()+Title.get(position).toString().substring(1).toLowerCase());
+                text.setText(Title.get(position).toString().substring(0, 1).toUpperCase() + Title.get(position).toString().substring(1).toLowerCase());
 
             }
             if (all_item.get(position).size() == 2) {
@@ -249,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
                 sec.setText(all_item.get(position).get(1).toString());
 
                 TextView text = (TextView) convertView.findViewById(R.id.first_one);
-                text.setText(Title.get(position).toString().substring(0,1).toUpperCase()+Title.get(position).toString().substring(1).toLowerCase());
+                text.setText(Title.get(position).toString().substring(0, 1).toUpperCase() + Title.get(position).toString().substring(1).toLowerCase());
             }
             if (all_item.get(position).size() == 3) {
                 convertView = getLayoutInflater().inflate(R.layout.eachrow, null);
@@ -265,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
                 thr.setText(all_item.get(position).get(2).toString());
 
                 TextView text = (TextView) convertView.findViewById(R.id.first_one);
-                text.setText(Title.get(position).toString().substring(0,1).toUpperCase()+Title.get(position).toString().substring(1).toLowerCase());
+                text.setText(Title.get(position).toString().substring(0, 1).toUpperCase() + Title.get(position).toString().substring(1).toLowerCase());
 
 
             }
@@ -284,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
                 thr.setText(all_item.get(position).get(2).toString() + "....");
 
                 TextView text = (TextView) convertView.findViewById(R.id.first_one);
-                text.setText(Title.get(position).toString().substring(0,1).toUpperCase()+Title.get(position).toString().substring(1).toLowerCase());
+                text.setText(Title.get(position).toString().substring(0, 1).toUpperCase() + Title.get(position).toString().substring(1).toLowerCase());
 
 
             }
@@ -318,8 +310,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, SearchActivity.class));
         }
 
-        if (id == R.id.Setting){
-            startActivity(new Intent(MainActivity.this , Setting.class));
+        if (id == R.id.Setting) {
+            startActivity(new Intent(MainActivity.this, Setting.class));
         }
 
         if (id == R.id.merge) {

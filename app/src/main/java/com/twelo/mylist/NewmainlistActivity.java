@@ -109,7 +109,6 @@ public class NewmainlistActivity extends AppCompatActivity {
 
                     add_data();
                     Toast.makeText(this, "List Created", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(this, MainActivity.class));
                     finish();
                 }
 
