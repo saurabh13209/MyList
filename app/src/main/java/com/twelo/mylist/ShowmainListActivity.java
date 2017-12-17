@@ -2,6 +2,7 @@ package com.twelo.mylist;
 
 import android.content.ClipData;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -78,16 +79,18 @@ public class ShowmainListActivity extends AppCompatActivity {
                 menuItem.setTitle("Un-Hide Item");
             }
         }
-/*
+
         cursor = data.getProtectList();
         while (cursor.moveToNext()) {
             if (cursor.getString(0).equals(Title)) {
-                MenuItem menuItem = menu.findItem(R.id.);
-                menuItem.setTitle("Un-Hide Item");
+                MenuItem menuItem = menu.findItem(R.id.protect_me);
+                menuItem.setTitle("Un-Protect Item");
             }
-        }*/
+        }
+
         return super.onCreateOptionsMenu(menu);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,11 +109,20 @@ public class ShowmainListActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
             Title = bundle.getString("Title");
-            lst = bundle.getStringArray("List");
+            Cursor cursor = data.TitleToItem(Title.toLowerCase());
+            int i=0 , l=0;
+            while (cursor.moveToNext()){
+                l++;
+            }
+            lst = new String[l];
+            cursor = data.TitleToItem(Title.toLowerCase());
+            while (cursor.moveToNext()){
+                lst[i] = cursor.getString(0);
+                i++;
+            }
 
             title = (TextView) findViewById(R.id.show_list_title);
             list = (ListView) findViewById(R.id.show_list);
-
 
 
             title.setText(Title.substring(0, 1).toUpperCase() + Title.substring(1).toLowerCase());
@@ -154,7 +166,7 @@ public class ShowmainListActivity extends AppCompatActivity {
             });
 
             Date_Time = new ArrayList<>();
-            Cursor cursor = data.TitleToDate(Title);
+            cursor = data.TitleToDate(Title);
             while (cursor.moveToNext()) {
                 Date_Time.add(cursor.getString(0));
             }
@@ -165,8 +177,6 @@ public class ShowmainListActivity extends AppCompatActivity {
 
 
         }
-
-
 
 
         floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
@@ -351,30 +361,30 @@ public class ShowmainListActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-       /* if (id == R.id.Hide_List){
-            Cursor cursor = data.getProtectList();
-            ArrayList pro_list = new ArrayList();
-            while (cursor.moveToNext()){
-                pro_list.add(cursor.getString(0));
-            }
-            for (int i=0;i<pro_list.size();i++){
-                if (pro_list.get(i).equals(Title)){
-                    data = new DataBaseHandler(ShowmainListActivity.this);
-                    data.add_protect_list(Title);
+
+        if (id == R.id.protect_me) {
+            SharedPreferences sharedPreferences = ShowmainListActivity.this.getSharedPreferences("Database", MODE_PRIVATE);
+            if (sharedPreferences.getString("3", "").equals("")) {
+                Toast.makeText(this, "Please Set password before using this option", Toast.LENGTH_LONG).show();
+            } else {
+                DataBaseHandler dataBaseHandler = new DataBaseHandler(ShowmainListActivity.this);
+                if (item.getTitle().equals("Protect List")) {
+                    dataBaseHandler.add_protect_list(Title);
+                } else {
+                    dataBaseHandler.Delete_protect(Title);
                 }
             }
         }
-
-        * */
-
         if (id == R.id.Hide_List) {
             DataBaseHandler dataBaseHandler = new DataBaseHandler(ShowmainListActivity.this);
-            dataBaseHandler.add_hidden_list(Title);
-
+            if (item.getTitle().equals("Hide List")) {
+                dataBaseHandler.add_hidden_list(Title);
+            } else {
+                dataBaseHandler.Delete_Hidden(Title);
+            }
         }
 
         if (id == R.id.share_it) {

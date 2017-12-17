@@ -150,6 +150,16 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE " + COL_TITLE + " = \"" + list + "\"" + ";");
     }
 
+    public void Delete_Hidden(String list) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + HIDDEN_lIST + " WHERE " + HIDDEN_TITLE + " = \"" + list + "\"" + ";");
+    }
+
+    public void Delete_protect(String list) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + PROTECT_lIST + " WHERE " + PROTECT_TITLE + " = \"" + list + "\"" + ";");
+    }
+
     public Cursor Add_Delete_Item(String Title, String item) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -172,7 +182,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     public Cursor getProtectList() {
         SQLiteDatabase database = getWritableDatabase();
-        Cursor cursor = database.rawQuery("SELECT " + PROTECT_lIST + " FROM " + PROTECT_TITLE + ";", null);
+        Cursor cursor = database.rawQuery("SELECT " + PROTECT_TITLE + " FROM " + PROTECT_lIST + ";", null);
         return cursor;
     }
 

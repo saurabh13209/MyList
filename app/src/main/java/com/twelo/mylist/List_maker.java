@@ -23,7 +23,7 @@ public class List_maker {
     }
 
     public void setList_title(String list_title) {
-        this.list_title = list_title;
+        this.list_title = list_title.toLowerCase();
     }
 
     public ArrayList<String> getList() {

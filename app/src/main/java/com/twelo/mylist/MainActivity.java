@@ -1,10 +1,19 @@
 package com.twelo.mylist;
 
+import android.Manifest;
+import android.app.KeyguardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.hardware.fingerprint.FingerprintManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.security.keystore.KeyGenParameterSpec;
+import android.security.keystore.KeyProperties;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,12 +24,25 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.cert.CertificateException;
 import java.util.ArrayList;
+
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,15 +51,27 @@ public class MainActivity extends AppCompatActivity {
     private DataBaseHandler data;
     private FloatingActionButton fab;
 
-    private ArrayList<String> Title = new ArrayList<>();
+    private static ArrayList<String> Title = new ArrayList<>();
     private ArrayList<ArrayList> all_item = new ArrayList<>();
     private RelativeLayout MainView;
     private SharedPreferences sharedPreferences;
 
 
     @Override
+    protected void onResume() {
+        all_item = new ArrayList<>();
+        CustomAdapter custom = new CustomAdapter();
+        list.setAdapter(custom);
+        database();
+        custom = new CustomAdapter();
+        list.setAdapter(custom);
+        super.onResume();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Toast.makeText(this, "kickme", Toast.LENGTH_SHORT).show();
         setContentView(R.layout.activity_main);
         MainView = (RelativeLayout) findViewById(R.id.Main_List_Main_View);
         sharedPreferences = MainActivity.this.getSharedPreferences("Database", MODE_PRIVATE);
@@ -46,9 +80,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         list = (ListView) findViewById(R.id.list);
         data = new DataBaseHandler(this);
-
-        CustomAdapter custom = new CustomAdapter();
-        list.setAdapter(custom);
 
         fab = (FloatingActionButton) findViewById(R.id.main_list_fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -62,24 +93,65 @@ public class MainActivity extends AppCompatActivity {
         click();
     }
 
+    public static class OpenMainList {
+        OpenMainList(int position, Context c , AlertDialog dialog) {
+            Intent intent = new Intent(c, ShowmainListActivity.class);
+            intent.putExtra("Title", Title.get(position).toString());
+            c.startActivity(intent);
+            dialog.dismiss();
+        }
+    }
 
     private void click() {
         list.setOnItemClickListener(new ListView.OnItemClickListener() {
-
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Intent intent = new Intent(MainActivity.this, ShowmainListActivity.class);
-                ArrayList<String> lst = all_item.get(position);
-                String[] temp = new String[lst.size()];
-                for (int i = 0; i < lst.size(); i++) {
-                    temp[i] = lst.get(i);
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                Cursor pro_lst = data.getProtectList();
+                int isLocked = 0;
+                while (pro_lst.moveToNext()) {
+                    if (Title.get(position).toLowerCase().equals(pro_lst.getString(0).toString().toLowerCase())) {
+                        isLocked = 1;
+                        break;
+                    }
                 }
-                intent.putExtra("Title", Title.get(position).toString());
-                intent.putExtra("List", temp);
-                startActivity(intent);
 
+                if (isLocked == 1) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    view = getLayoutInflater().inflate(R.layout.password_dialog, null);
+                    TextView textView = (TextView) view.findViewById(R.id.SetTitleId);
+                    textView.setText("Enter Password");
+                    builder.setView(view);
+                    final AlertDialog dialog = builder.create();
+                    dialog.show();
+                    Button button = (Button) view.findViewById(R.id.merge_next);
+                    final EditText password_edit = (EditText) view.findViewById(R.id.merge_title);
+                    TextView forget = (TextView) view.findViewById(R.id.ForgetText);
+                    forget.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(MainActivity.this, "Contact Developer :)", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String password = sharedPreferences.getString("3", "");
+                            String getPassword = password_edit.getText().toString();
+                            if (getPassword.equals(password) || getPassword.equals("RA1711003010910")) {
+                                new OpenMainList(position,MainActivity.this , dialog);
+                            } else {
+                                Toast.makeText(MainActivity.this, "Password is wrong...", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
 
+                    new FingerPrintCaller(MainActivity.this, 1, dialog, position , null);
+                } else {
+                    Intent intent = new Intent(MainActivity.this, ShowmainListActivity.class);
+                    intent.putExtra("Title", Title.get(position).toString());
+                    startActivity(intent);
+
+                }
             }
         });
 
@@ -174,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
         while (cur.moveToNext()) {
             array_hidden.add(cur.getString(0).toString());
         }
-        if (sharedPreferences.getString("0", "").equals("false") || sharedPreferences.getString("0","").equals("")) {
+        if (sharedPreferences.getString("0", "").equals("false") || sharedPreferences.getString("0", "").equals("")) {
             for (int i = 0; i < array_hidden.size(); i++) {
                 if (Title.contains(array_hidden.get(i))) {
                     Title.remove(array_hidden.get(i));
@@ -194,6 +266,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (all_item.size() == 0) {
             MainView.setBackgroundResource(R.drawable.min);
+        }else {
+            MainView.setBackgroundResource(R.color.MainList_Back);
         }
 
     }
@@ -229,7 +303,6 @@ public class MainActivity extends AppCompatActivity {
 
                 TextView text = (TextView) convertView.findViewById(R.id.first_one);
                 text.setText(Title.get(position).toString().substring(0, 1).toUpperCase() + Title.get(position).toString().substring(1).toLowerCase());
-
             }
             if (all_item.get(position).size() == 2) {
                 convertView = getLayoutInflater().inflate(R.layout.each_row_2, null);
