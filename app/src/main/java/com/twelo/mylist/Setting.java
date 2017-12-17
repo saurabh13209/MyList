@@ -43,6 +43,7 @@ public class Setting extends AppCompatActivity {
         arrayList.add("Show Hidden List");
         arrayList.add("Set Signature");
         arrayList.add("Set Password");
+        arrayList.add("Set Password");
         List.setAdapter(customAdapter);
 
     }
