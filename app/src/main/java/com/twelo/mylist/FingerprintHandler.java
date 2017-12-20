@@ -63,7 +63,9 @@ class FingerprintHandler extends FingerprintManager.AuthenticationCallback {
     @Override
     public void onAuthenticationFailed() {
         Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-        v.vibrate(500);
+        if (v != null) {
+            v.vibrate(500);
+        }
         super.onAuthenticationFailed();
     }
 }

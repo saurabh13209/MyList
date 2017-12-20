@@ -42,6 +42,7 @@ public class FingerPrintCaller {
         // Finger Print Code
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Toast.makeText(context, "Finger Print Accepted", Toast.LENGTH_SHORT).show();
             KeyguardManager keyguardManager = (KeyguardManager) context.getSystemService(KEYGUARD_SERVICE);
             FingerprintManager fingerprintManager = (FingerprintManager) context.getSystemService(FINGERPRINT_SERVICE);
 
