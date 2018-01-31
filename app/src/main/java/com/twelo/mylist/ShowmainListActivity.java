@@ -57,7 +57,6 @@ public class ShowmainListActivity extends AppCompatActivity {
             i++;
         }
 
-
         Date_Time = new ArrayList<>();
         cursor = data.TitleToDate(Title);
         while (cursor.moveToNext()) {
