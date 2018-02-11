@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +27,8 @@ public class Setting extends AppCompatActivity {
     private ListView List;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-
+    private setThemeMain setthemeMain;
+    private RelativeLayout Layout;
 
     private ArrayList<String> arrayList = new ArrayList<>();
 
@@ -35,6 +37,9 @@ public class Setting extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
+        setthemeMain = new setThemeMain(Setting.this);
+        Layout = (RelativeLayout)findViewById(R.id.SettingLayout);
+        Layout.setBackgroundColor(setthemeMain.Background);
         toolbar = (Toolbar) findViewById(R.id.setting_toolbar);
         TextView Title = (TextView) toolbar.findViewById(R.id.Main_Menu_Title);
         Title.setText("Setting");
@@ -44,13 +49,10 @@ public class Setting extends AppCompatActivity {
         arrayList.add("Show Hidden List");
         arrayList.add("Set Signature");
         arrayList.add("Set Password");
+        arrayList.add("Dark Theme");
         List.setAdapter(customAdapter);
     }
 
-    public static class OpenItem {
-        OpenItem() {
-        }
-    }
 
     class CustomAdapter extends BaseAdapter {
         @Override
@@ -75,7 +77,7 @@ public class Setting extends AppCompatActivity {
             final CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.setting_item_check);
             editor = sharedPreferences.edit();
             text.setText(arrayList.get(position));
-
+            text.setTextColor(setthemeMain.Text);
             String s = sharedPreferences.getString(String.valueOf(position), "");
             if (s.equals("")) {
                 if (position == 0) {
@@ -91,6 +93,13 @@ public class Setting extends AppCompatActivity {
                     checkBox.setChecked(true);
                 }
             }
+
+            if (position == 3){
+                if (sharedPreferences.getString("Theme","").equals("true")){
+                    checkBox.setChecked(true);
+                }
+            }
+
 
 
             convertView.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +125,7 @@ public class Setting extends AppCompatActivity {
             if (position == 2 || position == 1) {
                 checkBox.setVisibility(View.INVISIBLE);
             }
+
 
             return convertView;
         }
@@ -252,6 +262,17 @@ public class Setting extends AppCompatActivity {
                 new FingerPrintCaller(Setting.this , 3 , dialog,2 , null);
             }
 
+        }
+
+        if (position == 3){
+            if (sharedPreferences.getString("Theme","").equals("true")){
+                editor.putString("Theme","false");
+                checkBox.setChecked(false);
+            }else {
+                checkBox.setChecked(true);
+                editor.putString("Theme","true");
+            }
+            editor.commit();
         }
     }
 

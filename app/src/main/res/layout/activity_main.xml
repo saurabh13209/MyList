@@ -4,7 +4,6 @@
     android:id="@+id/Main_List_Main_View"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/MainList_Back"
     android:descendantFocusability="blocksDescendants"
     tools:context="com.twelo.mylist.MainActivity">
 
@@ -13,15 +12,16 @@
         layout="@layout/app_bar" />
 
     <ListView
+        android:scrollbars="none"
         android:id="@+id/list"
         android:layout_width="match_parent"
+        android:divider="@android:color/transparent"
         android:layout_height="match_parent"
         android:layout_below="@+id/app_bar"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="25dp"
-        android:divider="#FA1"
-        android:dividerHeight="2dp"></ListView>
+        android:dividerHeight="6dp"></ListView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/main_list_fab"

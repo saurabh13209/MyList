@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.twelo.mylist.NewmainlistActivity"
-    android:background="@color/MainList_Back">
+    android:background="@android:color/white">
 
     <RelativeLayout
         android:layout_width="0dp"

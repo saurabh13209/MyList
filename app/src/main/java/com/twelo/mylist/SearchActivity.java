@@ -145,61 +145,29 @@ public class SearchActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
 
 
+            convertView = getLayoutInflater().inflate(R.layout.each_row_1, null);
+
+            TextView first = (TextView) convertView.findViewById(R.id.one_item);
+            TextView num = (TextView) convertView.findViewById(R.id.total_item);
+            num.setText( all_item.get(position).size() + "");
+            TextView text = (TextView) convertView.findViewById(R.id.first_one);
+            text.setText(Title.get(position).toString().substring(0, 1).toUpperCase() + Title.get(position).toString().substring(1).toLowerCase());
+
+
             if (all_item.get(position).size() == 1) {
-                convertView = getLayoutInflater().inflate(R.layout.each_row_1, null);
-
-                TextView first = (TextView) convertView.findViewById(R.id.one_item);
-                TextView num  =(TextView) convertView.findViewById(R.id.total_item);
-
-                num.setText("["+all_item.get(position).size()+"]");
                 first.setText(all_item.get(position).get(0).toString());
             }
             if (all_item.get(position).size() == 2) {
-                convertView = getLayoutInflater().inflate(R.layout.each_row_2, null);
-
-                TextView first = (TextView) convertView.findViewById(R.id.one_item);
-                TextView sec = (TextView) convertView.findViewById(R.id.two_item);
-                TextView num  =(TextView) convertView.findViewById(R.id.total_item);
-
-                num.setText("["+all_item.get(position).size()+"]");
-
-                first.setText(all_item.get(position).get(0).toString());
-                sec.setText(all_item.get(position).get(1).toString());
+                first.setText(all_item.get(position).get(0).toString()+"\n"+all_item.get(position).get(1).toString());
             }
             if (all_item.get(position).size() == 3) {
-                convertView = getLayoutInflater().inflate(R.layout.eachrow, null);
-
-                TextView first = (TextView) convertView.findViewById(R.id.one_item);
-                TextView sec = (TextView) convertView.findViewById(R.id.two_item);
-                TextView thr = (TextView) convertView.findViewById(R.id.three_item);
-                TextView num  =(TextView) convertView.findViewById(R.id.total_item);
-
-                num.setText("["+all_item.get(position).size()+"]");
-
-                first.setText(all_item.get(position).get(0).toString());
-                sec.setText(all_item.get(position).get(1).toString());
-                thr.setText(all_item.get(position).get(2).toString());
-
+                first.setText(all_item.get(position).get(0).toString()+"\n"+all_item.get(position).get(1).toString()+"\n"+all_item.get(position).get(2).toString());
             }
 
             if (all_item.get(position).size() > 3) {
-                convertView = getLayoutInflater().inflate(R.layout.eachrow, null);
-
-                TextView first = (TextView) convertView.findViewById(R.id.one_item);
-                TextView sec = (TextView) convertView.findViewById(R.id.two_item);
-                TextView thr = (TextView) convertView.findViewById(R.id.three_item);
-                TextView num  =(TextView) convertView.findViewById(R.id.total_item);
-
-                num.setText("["+all_item.get(position).size()+"]");
-
-                first.setText(all_item.get(position).get(0).toString());
-                sec.setText(all_item.get(position).get(1).toString());
-                thr.setText(all_item.get(position).get(2).toString() + "....");
-
+                first.setText(all_item.get(position).get(0).toString()+"\n"+all_item.get(position).get(1).toString()+"\n"+all_item.get(position).get(2).toString()+"...");
             }
 
-            TextView text = (TextView) convertView.findViewById(R.id.first_one);
-            text.setText(Title.get(position));
 
             return convertView;
         }

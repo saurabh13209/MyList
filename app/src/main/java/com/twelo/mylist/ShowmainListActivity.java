@@ -21,8 +21,10 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,16 +41,16 @@ public class ShowmainListActivity extends AppCompatActivity {
     private DataBaseHandler data;
     private String DELETED_ITEM = new String();
     private ArrayList<String> Date_Time = new ArrayList<>();
-    private Menu menu;
-
+    private setThemeMain setthemeMain;
+    private RelativeLayout theme;
 
     private FloatingActionButton floatingActionButton;
 
     @Override
     protected void onResume() {
+        setthemeMain =  new setThemeMain(ShowmainListActivity.this);
         CustomAdapter customAdapter = new CustomAdapter();
         list.setAdapter(customAdapter);
-
         Cursor cursor = data.TitleToItem(Title);
         lst = new String[cursor.getCount()];
         int i = 0;
@@ -95,6 +97,8 @@ public class ShowmainListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_showmain_list);
 
+        theme = (RelativeLayout)findViewById(R.id.show_main_list_id);
+        theme.setBackgroundColor(setthemeMain.Background);
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -122,7 +126,7 @@ public class ShowmainListActivity extends AppCompatActivity {
 
             title = (TextView) findViewById(R.id.show_list_title);
             list = (ListView) findViewById(R.id.show_list);
-
+            title.setTextColor(setthemeMain.Text);
 
             title.setText(Title.substring(0, 1).toUpperCase() + Title.substring(1).toLowerCase());
             title.setOnClickListener(new View.OnClickListener() {
@@ -256,10 +260,18 @@ public class ShowmainListActivity extends AppCompatActivity {
         public View getView(final int position, View convertView, ViewGroup parent) {
             convertView = getLayoutInflater().inflate(R.layout.item_eachrow, null);
 
+            LinearLayout layout = (LinearLayout)convertView.findViewById(R.id.EachListLayout);
+            layout.setBackground(setthemeMain.ListTheme);
+            layout.setPadding(10,10,10,10);
             final TextView item_text = (TextView) convertView.findViewById(R.id.item_text_view);
             ImageButton cross = (ImageButton) convertView.findViewById(R.id.item_delete_image);
+            item_text.setTextColor(setthemeMain.Text);
             final TextView date_time = (TextView) convertView.findViewById(R.id.date_item);
-            date_time.setText(Date_Time.get(position).toString());
+            date_time.setTextColor(setthemeMain.Text);
+            try {
+                date_time.setText(Date_Time.get(position).toString());
+            }catch (Exception e){
+            }
             item_text.setText(lst[position].toString().substring(0, 1).toUpperCase() + lst[position].toString().substring(1).toLowerCase());
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -3,7 +3,12 @@
     <color name="colorPrimary">#1e88e5</color>
     <color name="colorPrimaryDark">#005cb2</color>
     <color name="colorAccent">#FF4081</color>
+
     <color name="main_list_item">#AAAAAA</color>
-    <color name="MainList_Back">#FFFFEE</color>
+    <color name="MainList_Back">#F5F5F5</color>
     <color name="main_list_title">#000000</color>
+    
+    <color name="DarkThemeBackground">#000000</color>
+    <color name="DarkThemeText">#FFFFFF</color>
+    <color name="DarkThemeList">#212121</color>
 </resources>

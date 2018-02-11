@@ -27,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -58,9 +59,13 @@ public class MainActivity extends AppCompatActivity {
     private RelativeLayout MainView;
     private SharedPreferences sharedPreferences;
 
+    setThemeMain setthemeMain;
+
 
     @Override
     protected void onResume() {
+        setthemeMain = new setThemeMain(MainActivity.this);
+
         all_item = new ArrayList<>();
         CustomAdapter custom = new CustomAdapter();
         list.setAdapter(custom);
@@ -268,8 +273,9 @@ public class MainActivity extends AppCompatActivity {
         if (all_item.size() == 0) {
             MainView.setBackgroundResource(R.drawable.min);
         }else {
-            MainView.setBackgroundResource(R.color.MainList_Back);
+            MainView.setBackgroundColor(setthemeMain.Background);
         }
+
 
     }
 
@@ -293,66 +299,32 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
+            convertView = getLayoutInflater().inflate(R.layout.each_row_1, null);
+            LinearLayout ListLayout = (LinearLayout) convertView.findViewById(R.id.ListViewLayout);
+            ListLayout.setBackground(setthemeMain.ListTheme);
+            TextView first = (TextView) convertView.findViewById(R.id.one_item);
+            TextView num = (TextView) convertView.findViewById(R.id.total_item);
+            first.setTextColor(setthemeMain.Text);
+            num.setTextColor(setthemeMain.Text);
+            num.setBackground(setthemeMain.NumTheme);
+            num.setText( all_item.get(position).size() + "");
+            TextView text = (TextView) convertView.findViewById(R.id.first_one);
+            text.setText(Title.get(position).toString().substring(0, 1).toUpperCase() + Title.get(position).toString().substring(1).toLowerCase());
+            text.setTextColor(setthemeMain.Text);
+
 
             if (all_item.get(position).size() == 1) {
-                convertView = getLayoutInflater().inflate(R.layout.each_row_1, null);
-
-                TextView first = (TextView) convertView.findViewById(R.id.one_item);
-                TextView num = (TextView) convertView.findViewById(R.id.total_item);
-                num.setText("[" + all_item.get(position).size() + "]");
                 first.setText(all_item.get(position).get(0).toString());
-
-                TextView text = (TextView) convertView.findViewById(R.id.first_one);
-                text.setText(Title.get(position).toString().substring(0, 1).toUpperCase() + Title.get(position).toString().substring(1).toLowerCase());
             }
             if (all_item.get(position).size() == 2) {
-                convertView = getLayoutInflater().inflate(R.layout.each_row_2, null);
-                TextView first = (TextView) convertView.findViewById(R.id.one_item);
-                TextView sec = (TextView) convertView.findViewById(R.id.two_item);
-                TextView num = (TextView) convertView.findViewById(R.id.total_item);
-                num.setText("[" + all_item.get(position).size() + "]");
-                first.setText(all_item.get(position).get(0).toString());
-                sec.setText(all_item.get(position).get(1).toString());
-
-                TextView text = (TextView) convertView.findViewById(R.id.first_one);
-                text.setText(Title.get(position).toString().substring(0, 1).toUpperCase() + Title.get(position).toString().substring(1).toLowerCase());
+                first.setText(all_item.get(position).get(0).toString()+"\n"+all_item.get(position).get(1).toString());
             }
             if (all_item.get(position).size() == 3) {
-                convertView = getLayoutInflater().inflate(R.layout.eachrow, null);
-
-                TextView first = (TextView) convertView.findViewById(R.id.one_item);
-                TextView sec = (TextView) convertView.findViewById(R.id.two_item);
-                TextView thr = (TextView) convertView.findViewById(R.id.three_item);
-                TextView num = (TextView) convertView.findViewById(R.id.total_item);
-                num.setText("[" + all_item.get(position).size() + "]");
-
-                first.setText(all_item.get(position).get(0).toString());
-                sec.setText(all_item.get(position).get(1).toString());
-                thr.setText(all_item.get(position).get(2).toString());
-
-                TextView text = (TextView) convertView.findViewById(R.id.first_one);
-                text.setText(Title.get(position).toString().substring(0, 1).toUpperCase() + Title.get(position).toString().substring(1).toLowerCase());
-
-
+                first.setText(all_item.get(position).get(0).toString()+"\n"+all_item.get(position).get(1).toString()+"\n"+all_item.get(position).get(2).toString());
             }
 
             if (all_item.get(position).size() > 3) {
-                convertView = getLayoutInflater().inflate(R.layout.eachrow, null);
-
-                TextView first = (TextView) convertView.findViewById(R.id.one_item);
-                TextView sec = (TextView) convertView.findViewById(R.id.two_item);
-                TextView thr = (TextView) convertView.findViewById(R.id.three_item);
-                TextView num = (TextView) convertView.findViewById(R.id.total_item);
-                num.setText("[" + all_item.get(position).size() + "]");
-
-                first.setText(all_item.get(position).get(0).toString());
-                sec.setText(all_item.get(position).get(1).toString());
-                thr.setText(all_item.get(position).get(2).toString() + "....");
-
-                TextView text = (TextView) convertView.findViewById(R.id.first_one);
-                text.setText(Title.get(position).toString().substring(0, 1).toUpperCase() + Title.get(position).toString().substring(1).toLowerCase());
-
-
+                first.setText(all_item.get(position).get(0).toString()+"\n"+all_item.get(position).get(1).toString()+"\n"+all_item.get(position).get(2).toString()+"...");
             }
 
 

@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -26,12 +28,18 @@ public class Delete_List extends AppCompatActivity {
     private ArrayList Title = new ArrayList();
     private ArrayList Checked = new ArrayList();
     private CheckBox checkBox;
+    private RelativeLayout Layout;
+    private setThemeMain setthemeMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete__list);
 
+        setthemeMain = new setThemeMain(Delete_List.this);
+
+        Layout = (RelativeLayout)findViewById(R.id.DeleteActivityLayout);
+        Layout.setBackgroundColor(setThemeMain.Background);
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -43,11 +51,15 @@ public class Delete_List extends AppCompatActivity {
             Title = bundle.getStringArrayList("Title");
         }
 
+        TextView Heading , subHeading;
+        Heading = (TextView)findViewById(R.id.fake_title);
+        subHeading = (TextView)findViewById(R.id.fake_text);
 
         listView = (ListView) findViewById(R.id.merge_list);
         CustomAdapter customAdapter = new CustomAdapter();
         listView.setAdapter(customAdapter);
-
+        Heading.setTextColor(setthemeMain.Text);
+        subHeading.setTextColor(setthemeMain.Text);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -92,6 +104,7 @@ public class Delete_List extends AppCompatActivity {
             convertView = getLayoutInflater().inflate(R.layout.history_eachrow, null);
             checkBox = (CheckBox) convertView.findViewById(R.id.hist_checkbox);
             checkBox.setText(Title.get(position).toString());
+            checkBox.setTextColor(setthemeMain.Text);
             if (Checked.contains(position)) {
                 checkBox.setChecked(true);
             } else {
