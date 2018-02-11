@@ -3,12 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="1"
-    android:background="@android:color/transparent">
+    android:weightSum="1">
 
     <LinearLayout
         android:id="@+id/ListViewLayout"
-        android:background="@drawable/main_list_background_dark"
+        android:background="@drawable/main_list_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -26,7 +25,7 @@
                 android:layout_weight="1"
                 android:paddingLeft="25dp"
                 android:text="add"
-                android:textColor="@android:color/white"
+                android:textColor="@color/main_list_title"
                 android:textSize="@dimen/Main_Heading"
                 android:textStyle="bold" />
 
@@ -36,8 +35,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
                 android:text="1"
-                android:textColor="@android:color/white"
-                android:background="@drawable/item_number_dark"
+                android:textColor="@android:color/black"
+                android:background="@drawable/item_number"
                 android:textSize="@dimen/Main_Heading_Count" />
 
 
@@ -49,7 +48,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="45dp"
             android:text="* list1"
-            android:textColor="@android:color/white"
+            android:textColor="@color/main_list_item"
             android:textSize="@dimen/Main_Heading_Sub"
             android:paddingBottom="10dp"/>
 

@@ -1,51 +1,28 @@
 package com.twelo.mylist;
 
-import android.Manifest;
-import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.hardware.fingerprint.FingerprintManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.security.keystore.KeyGenParameterSpec;
-import android.security.keystore.KeyProperties;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.cert.CertificateException;
 import java.util.ArrayList;
-
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -65,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         setthemeMain = new setThemeMain(MainActivity.this);
-
         all_item = new ArrayList<>();
         CustomAdapter custom = new CustomAdapter();
         list.setAdapter(custom);
@@ -79,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setthemeMain = new setThemeMain(MainActivity.this);
         MainView = (RelativeLayout) findViewById(R.id.Main_List_Main_View);
         sharedPreferences = MainActivity.this.getSharedPreferences("Database", MODE_PRIVATE);
         toolbar = (Toolbar) findViewById(R.id.app_bar);
@@ -298,20 +275,16 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-
-            convertView = getLayoutInflater().inflate(R.layout.each_row_1, null);
-            LinearLayout ListLayout = (LinearLayout) convertView.findViewById(R.id.ListViewLayout);
-            ListLayout.setBackground(setthemeMain.ListTheme);
+            if (setthemeMain.isdark){
+                convertView = getLayoutInflater().inflate(R.layout.each_row_1, null);
+            }else{
+                convertView = getLayoutInflater().inflate(R.layout.eachrow, null);
+            }
             TextView first = (TextView) convertView.findViewById(R.id.one_item);
             TextView num = (TextView) convertView.findViewById(R.id.total_item);
-            first.setTextColor(setthemeMain.Text);
-            num.setTextColor(setthemeMain.Text);
-            num.setBackground(setthemeMain.NumTheme);
             num.setText( all_item.get(position).size() + "");
             TextView text = (TextView) convertView.findViewById(R.id.first_one);
             text.setText(Title.get(position).toString().substring(0, 1).toUpperCase() + Title.get(position).toString().substring(1).toLowerCase());
-            text.setTextColor(setthemeMain.Text);
-
 
             if (all_item.get(position).size() == 1) {
                 first.setText(all_item.get(position).get(0).toString());

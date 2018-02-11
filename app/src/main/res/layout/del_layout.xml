@@ -1,45 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="20dp"
-    android:background="@color/MainList_Back">
+    android:background="@color/MainList_Back"
+    android:orientation="vertical"
+    android:padding="20dp">
 
     <TextView
         android:id="@+id/del_text_main_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="Want to permanently delete List "
-        android:textSize="30sp"
+        android:textAlignment="center"
         android:textColor="@android:color/black"
-        android:textAlignment="center"/>
+        android:textSize="20sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
+        android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp">
+        android:orientation="horizontal">
+
         <Button
-            android:background="@color/colorPrimary"
-            android:layout_marginRight="10dp"
+            android:id="@+id/del_yes_btn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
+            android:background="@drawable/delete_dialog_btn"
             android:text="Yes"
-            android:textColor="@android:color/white"
-            android:textSize="30sp"
-            android:id="@+id/del_yes_btn"/>
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp" />
+
         <Button
-            android:textSize="30sp"
-            android:textColor="@android:color/white"
-            android:background="@color/colorPrimary"
-            android:layout_marginLeft="10dp"
             android:id="@+id/del_no_btn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
-            android:text="No"/>
+            android:background="@drawable/delete_dialog_btn"
+            android:text="No"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp" />
     </LinearLayout>
 
 </LinearLayout>

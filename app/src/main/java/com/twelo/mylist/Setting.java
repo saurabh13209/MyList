@@ -97,6 +97,8 @@ public class Setting extends AppCompatActivity {
             if (position == 3){
                 if (sharedPreferences.getString("Theme","").equals("true")){
                     checkBox.setChecked(true);
+                }else{
+                    checkBox.setChecked(false);
                 }
             }
 

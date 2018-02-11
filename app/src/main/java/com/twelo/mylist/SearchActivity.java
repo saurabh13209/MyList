@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,8 +25,8 @@ public class SearchActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private EditText search_text;
     private ListView search_lst;
-
-
+    private RelativeLayout layout;
+    private setThemeMain setthemeMain;
     ArrayList<String> Title = new ArrayList<String>();
     ArrayList<ArrayList> all_item = new ArrayList<ArrayList>();
 
@@ -37,13 +38,15 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
-
+        layout = (RelativeLayout)findViewById(R.id.SearchLayoutMain);
         db = new DataBaseHandler(getApplicationContext());
+        setthemeMain = new setThemeMain(SearchActivity.this);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        layout.setBackgroundColor(setthemeMain.Background);
         search_text = (EditText) findViewById(R.id.search_edit_text);
         search_lst = (ListView) findViewById(R.id.search_list);
 
@@ -144,15 +147,16 @@ public class SearchActivity extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-
-            convertView = getLayoutInflater().inflate(R.layout.each_row_1, null);
-
+            if (setthemeMain.isdark){
+                convertView = getLayoutInflater().inflate(R.layout.each_row_1, null);
+            }else{
+                convertView = getLayoutInflater().inflate(R.layout.eachrow, null);
+            }
             TextView first = (TextView) convertView.findViewById(R.id.one_item);
             TextView num = (TextView) convertView.findViewById(R.id.total_item);
             num.setText( all_item.get(position).size() + "");
             TextView text = (TextView) convertView.findViewById(R.id.first_one);
             text.setText(Title.get(position).toString().substring(0, 1).toUpperCase() + Title.get(position).toString().substring(1).toLowerCase());
-
 
             if (all_item.get(position).size() == 1) {
                 first.setText(all_item.get(position).get(0).toString());
@@ -167,7 +171,6 @@ public class SearchActivity extends AppCompatActivity {
             if (all_item.get(position).size() > 3) {
                 first.setText(all_item.get(position).get(0).toString()+"\n"+all_item.get(position).get(1).toString()+"\n"+all_item.get(position).get(2).toString()+"...");
             }
-
 
             return convertView;
         }

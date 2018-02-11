@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -25,7 +26,8 @@ public class NewmainlistActivity extends AppCompatActivity {
     DataBaseHandler db;
 
     String task = "";
-
+    private RelativeLayout layout;
+    private setThemeMain setthemeMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,9 @@ public class NewmainlistActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
+        layout = (RelativeLayout)findViewById(R.id.NewListMain);
+        setthemeMain = new setThemeMain(NewmainlistActivity.this);
+        layout.setBackgroundColor(setthemeMain.Background);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -43,6 +48,7 @@ public class NewmainlistActivity extends AppCompatActivity {
 
         lv = (LinearLayout) findViewById(R.id.main_liner_lay);
         main_title = (EditText) findViewById(R.id.add_list_title);
+        main_title.setTextColor(setthemeMain.Text);
         db = new DataBaseHandler(getApplicationContext());
 
         if (bundle != null) {
@@ -76,7 +82,7 @@ public class NewmainlistActivity extends AppCompatActivity {
         ed.setText(text);
         ed.setHint("Enter List Item");
         ed.setHintTextColor(Color.GRAY);
-        ed.setTextColor(Color.BLACK);
+        ed.setTextColor(setthemeMain.Text);
 
         lv.addView(ed);
 

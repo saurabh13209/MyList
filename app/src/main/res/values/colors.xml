@@ -7,8 +7,11 @@
     <color name="main_list_item">#AAAAAA</color>
     <color name="MainList_Back">#F5F5F5</color>
     <color name="main_list_title">#000000</color>
-    
+
     <color name="DarkThemeBackground">#000000</color>
     <color name="DarkThemeText">#FFFFFF</color>
     <color name="DarkThemeList">#212121</color>
+
+    <color name="DarkPrimamry">#E1771A</color>
+    <color name="DarkPrimamryDark">#FFA856</color>
 </resources>
